@@ -1,0 +1,39 @@
+using ECommerce.Application.Contracts.Persistence;
+using ECommerce.Application.Interfaces.Repositories;
+using ECommerce.Application.Interfaces.Services;
+using ECommerce.Infrastructure.Email;
+using ECommerce.Infrastructure.Persistence;
+using ECommerce.Infrastructure.Persistence.Repositories;
+using ECommerce.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+namespace ECommerce.Infrastructure.DependencyInjection;
+
+using ECommerce.Infrastructure.BackgroundJobs;
+using ECommerce.Infrastructure.Pdf;
+using Microsoft.Extensions.Options;
+public static class InfrastructureServiceRegistration
+{
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(connectionString));
+
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPaymentGateway, FakePaymentGateway>();
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
+        services.AddHostedService<BasketExpirationWorker>();
+        services.AddScoped<IPdfService, QuestPdfService>();
+        services.Configure<EmailSettings>(
+           configuration.GetSection("Email"));
+
+        return services;
+    }
+}

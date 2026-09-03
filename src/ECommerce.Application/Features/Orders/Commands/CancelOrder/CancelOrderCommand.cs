@@ -1,0 +1,13 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ECommerce.Application.Features.Orders.Commands.CancelOrder
+{
+    public sealed record CancelOrderCommand(int OrderId) : IRequest<Unit>
+    {
+    }
+}
