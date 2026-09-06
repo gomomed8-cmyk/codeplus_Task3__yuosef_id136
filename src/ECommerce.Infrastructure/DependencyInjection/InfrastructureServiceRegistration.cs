@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace ECommerce.Infrastructure.DependencyInjection;
-
 using ECommerce.Infrastructure.BackgroundJobs;
 using ECommerce.Infrastructure.Pdf;
+using ECommerce.Infrastructure.Redis;
 using Microsoft.Extensions.Options;
+using StackExchange.Redis;
+
 public static class InfrastructureServiceRegistration
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
@@ -31,8 +33,17 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IEmailService, SmtpEmailService>();
         services.AddHostedService<BasketExpirationWorker>();
         services.AddScoped<IPdfService, QuestPdfService>();
+        services.AddSingleton<IProductViewTracker, ProductViewTracker>();
+        services.AddHostedService<ProductViewWorker>();
         services.Configure<EmailSettings>(
            configuration.GetSection("Email"));
+
+        services.AddSingleton<IConnectionMultiplexer>(sp =>
+        {
+            var connectionString = configuration["Redis:ConnectionString"];
+
+            return ConnectionMultiplexer.Connect(connectionString!);
+        });
 
         return services;
     }

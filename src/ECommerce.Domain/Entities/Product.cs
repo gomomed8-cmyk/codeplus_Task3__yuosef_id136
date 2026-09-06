@@ -9,6 +9,7 @@ public sealed class Product : Entity
     public string SKU { get; private set; } = string.Empty;
     public decimal Price { get; private set; }
     public int StockQuantity { get; private set; }
+    public int ViewCount { get; private set; }
 
     private Product() { }
 
@@ -55,5 +56,12 @@ public sealed class Product : Entity
             throw new DomainException("Restock quantity must be greater than zero.");
 
         StockQuantity += quantity;
+    }
+    public void UpdateViewCount(int viewCount)
+    {
+        if (viewCount < 0)
+            throw new DomainException("View count cannot be negative.");
+
+        ViewCount = viewCount;
     }
 }
