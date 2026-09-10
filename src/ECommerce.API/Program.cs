@@ -1,8 +1,9 @@
+using ECommerce.API.Hubs;
 using ECommerce.API.Middleware;
 using ECommerce.Application.DependencyInjection;
 using ECommerce.Infrastructure.DependencyInjection;
-using QuestPDF.Infrastructure;
 using ECommerce.Infrastructure.Persistence;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,11 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplicationServices();
+builder.Services.AddSignalR();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 QuestPDF.Settings.License = LicenseType.Evaluation;
 
 var app = builder.Build();
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
@@ -33,6 +34,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<OrderTrackingHub>("/hubs/order-tracking");
 
 app.Run();
 

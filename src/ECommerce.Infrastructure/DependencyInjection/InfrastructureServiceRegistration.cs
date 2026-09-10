@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 namespace ECommerce.Infrastructure.DependencyInjection;
+
+using ECommerce.Application.Services;
 using ECommerce.Infrastructure.BackgroundJobs;
 using ECommerce.Infrastructure.Pdf;
 using ECommerce.Infrastructure.Redis;
+using ECommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
@@ -30,6 +33,9 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPaymentGateway, FakePaymentGateway>();
         services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddScoped<IConversationRepository, ConversationRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IChatService, ChatService>();
         services.AddScoped<IEmailService, SmtpEmailService>();
         services.AddHostedService<BasketExpirationWorker>();
         services.AddScoped<IPdfService, QuestPdfService>();

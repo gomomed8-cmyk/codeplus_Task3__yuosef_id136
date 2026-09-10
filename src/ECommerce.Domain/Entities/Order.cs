@@ -79,6 +79,18 @@ public sealed class Order : Entity
         Status = OrderStatus.Paid;
         Payment = new Payment(Id, TotalAmount, transactionReference, PaymentStatus.Success);
     }
+    public void UpdateStatus(OrderStatus newStatus)
+    {
+        if (Status == OrderStatus.Cancelled)
+            throw new InvalidOrderStateException(
+                "Cannot update the status of a cancelled order.");
+
+        if (Status == OrderStatus.Delivered)
+            throw new InvalidOrderStateException(
+                "Cannot update the status of a delivered order.");
+
+        Status = newStatus;
+    }
 
     public void Cancel()
     {

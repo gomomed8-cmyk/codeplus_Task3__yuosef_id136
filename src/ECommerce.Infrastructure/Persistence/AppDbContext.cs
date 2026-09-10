@@ -16,6 +16,8 @@ public sealed class AppDbContext : DbContext
     public DbSet<Coupon> Coupons => Set<Coupon>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Basket> Baskets => Set<Basket>();
+    public DbSet<Conversation> Conversations { get; set; }
+    public DbSet<Message> Messages { get; set; }
     public DbSet<BasketItem> BasketItems => Set<BasketItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

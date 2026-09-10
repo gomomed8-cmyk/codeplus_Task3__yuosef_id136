@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.UnitTests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.IntegrationTests", "tests\ECommerce.IntegrationTests\ECommerce.IntegrationTests.csproj", "{66666666-6666-6666-6666-666666666666}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.SignalRTest", "ECommerce.SignalRTest\ECommerce.SignalRTest.csproj", "{42314CDF-B689-4B6A-AA28-AD3C7C42A42C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,8 +46,15 @@ Global
 		{66666666-6666-6666-6666-666666666666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66666666-6666-6666-6666-666666666666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66666666-6666-6666-6666-666666666666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42314CDF-B689-4B6A-AA28-AD3C7C42A42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42314CDF-B689-4B6A-AA28-AD3C7C42A42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42314CDF-B689-4B6A-AA28-AD3C7C42A42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42314CDF-B689-4B6A-AA28-AD3C7C42A42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8AB5DB03-6F83-400D-8A4D-9BDCFCFB4E15}
 	EndGlobalSection
 EndGlobal
